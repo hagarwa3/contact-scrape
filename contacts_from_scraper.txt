@@ -1,0 +1,114 @@
+url:   https://wiki.cites.illinois.edu/wiki/display/kevinchang/Kevin+C.+Chang
+name:  Kevin C. Chang
+email:  kcchang (at) illinois (dot) edu
+phone/s:  [u'(217) 244-2919']
+name:  Donna Coleman
+email:  donnakc (at) illinois (dot) edu
+phone/s:  (217) 244-8837
+
+url:   http://luthuli.cs.uiuc.edu/~daf/contact.html
+
+url:   http://rsim.cs.illinois.edu/~sadve/contact.html
+name:  Sarita Adve
+email:  sadve@illinois.edu
+phone/s:  [u' 217-333-8461', u' 217-333-3373', u'217-244-7915']
+name:  Molly Flesner
+phone/s:   217-244-6813
+
+url:   http://web.engr.illinois.edu/~vadve/Contact_Info.html
+name:  Molly Flesner
+email:  mflesner@cs.uiuc.edu
+phone/s:  u217-244-6813
+phone/s:  [u' 217-244-2016', u' 217-265-6500']
+
+url:   http://web.engr.illinois.edu/~zaher/
+name:  Tarek F. Abdelzaher
+phone/s:  [u'(217) 265-6793', u'(217) 244-6500']
+
+url:   http://orchid.cs.illinois.edu/people/bailey/index.html
+name:  Brian P. Bailey
+email:  bpbailey@illinois.edu
+phone/s:  [u' 217-333-6106']
+
+url:   http://web.engr.illinois.edu/~caesar/
+name:  Matthew Caesar
+phone/s:  [u' 847-323-2968']
+
+url:   http://jeffe.cs.illinois.edu/address.html
+name:  Jeff Erickson
+email:  jeffe@illinois.edu
+email:  jeffe@cs.uiuc.edu
+email:  ewilson@illinois.edu
+email:  jeffe@cs.uiuc.edu
+phone/s:  [u'(217) 333-6769', u'(217) 333-6249', u'(217) 365-0019']
+
+url:   http://mfleck.cs.illinois.edu/
+name:  Margaret M. Fleck
+email:  mfleck@illinois.edu
+phone/s:  []
+
+url:   http://pbg.cs.illinois.edu/
+name:  Matthew Caesar
+phone/s:  []
+name:  Philip Brighten Godfrey
+name:  Alexandra Kolla
+
+url:   http://polaris.cs.uiuc.edu/~garzaran/
+name:  María Jesús Garzarán
+phone/s:  [u' 217-244-8878', u' 217-265-6582']
+
+url:   http://web.engr.illinois.edu/~cgunter/?page_id=8
+name:  Carl A. Gunter
+email:  cgunter@illinois.edu
+phone/s:  [u'(217)-244-1982', u'(217)-265-6758', u'(217)-265-6478', u'(217) 333-2723']
+name:  Indy Clay
+email:  iclay@illinois.edu
+
+url:   http://indy.cs.illinois.edu/
+name:  Indranil Gupta
+phone/s:  [u' 217 265 5517']
+
+url:   http://hanj.cs.illinois.edu/
+name:  Jiawei Han
+phone/s:  [u'(217) 333-6903']
+
+url:   http://social.cs.uiuc.edu/people/kkarahal.html
+name:  Karrie G. Karahalios
+email:  kkarahal@cs.uiuc.edu
+phone/s:  [u' 217 265 6841']
+
+url:   http://charm.cs.illinois.edu/~kale/
+name:  Shanna M. DeSouza
+email:  desouzas@illinois.edu
+phone/s:  [u'(217) 244-0094', u'(217) 244-1186', u'(217) 244-9104', u'(217) 265-7838']
+name:  Tierra McCurry
+
+url:   http://akolla.cs.illinois.edu/
+name:  Alexandra Kolla
+email:  akolla [at] illinois [dot] edu
+phone/s:  []
+
+url:   http://lukeo.cs.illinois.edu/
+name:  Luke Olson
+phone/s:  [u'217-244-8422']
+
+url:   http://web.engr.illinois.edu/~adityagp/
+name:  Aditya Parameswaran
+phone/s:  []
+
+url:   http://mmp.cs.illinois.edu/
+name:  Manoj M. Prabhakaran
+phone/s:  [u'217-244-4020', u'217-265-6582']
+
+url:   http://l2r.cs.illinois.edu/contact.html
+
+url:   http://rutenbar.cs.illinois.edu/contact/
+name:  Rob A. Rutenbar
+phone/s:  [u'217-333-3373', u'217-333-6079']
+name:  Karen Stahl
+phone/s: [u'217-244-7949']
+
+url:   http://www.sinhalab.net/sinha-s-home
+name:  Saurabh Sinha
+email:  sinhas@illinois.edu
+phone/s:  [u'217-333-3233']
