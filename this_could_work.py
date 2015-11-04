@@ -2,6 +2,10 @@
 import urllib2
 from bs4 import BeautifulSoup
 import re
+from nltk.tag.stanford import NERTagger
+import os
+java_path = "C:/Program Files/Java/jdk1.7.0_71/bin/java.exe"
+os.environ['JAVAHOME'] = java_path
 #name. phone, title, email, department
 
 namelist = ["Kevin C. Chang", "Donna Coleman", "Sarita Adve", "Molly Flesner", "Vikram Adve", "Tarek F. Abdelzaher", "Brian P. Bailey", "Matthew Caesar", "Jeff Erickson", "Margaret M. Fleck", "Philip Brighten Godfrey", "María Jesús Garzarán", "Carl A. Gunter", "Indy Clay", "Indranil Gupta", "Karrie G. Karahalios", "Jiawei Han", "Shanna M. DeSouza", "Tierra McCurry", "Laxmikant V. Kale", "Alexandra Kolla", "Aditya Parameswaran", "Manoj M. Prabhakaran", "Luke Olson", "Rob A. Rutenbar", "Karen Stahl", "Tierra Reed", "Saurabh Sinha", "Dan Roth"]
@@ -68,7 +72,8 @@ def lcs(a, b):
 ################################################################################
 
 
-url2= ["https://wiki.cites.illinois.edu/wiki/display/kevinchang/Kevin+C.+Chang", "https://cs.illinois.edu/directory/profile/kcchang", "http://luthuli.cs.uiuc.edu/~daf/contact.html", "http://rsim.cs.illinois.edu/~sadve/contact.html", "http://web.engr.illinois.edu/~vadve/Contact_Info.html","http://web.engr.illinois.edu/~zaher/", "http://orchid.cs.illinois.edu/people/bailey/index.html", "http://web.engr.illinois.edu/~caesar/", "http://jeffe.cs.illinois.edu/address.html", "http://mfleck.cs.illinois.edu/", "http://pbg.cs.illinois.edu/", "http://polaris.cs.uiuc.edu/~garzaran/", "http://web.engr.illinois.edu/~cgunter/?page_id=8", "http://indy.cs.illinois.edu/", "http://hanj.cs.illinois.edu/", "http://social.cs.uiuc.edu/people/kkarahal.html", "http://charm.cs.illinois.edu/~kale/", "http://akolla.cs.illinois.edu/", "http://lukeo.cs.illinois.edu/", "http://web.engr.illinois.edu/~adityagp/", "http://mmp.cs.illinois.edu/", "http://l2r.cs.illinois.edu/contact.html", "http://rutenbar.cs.illinois.edu/contact/", "http://www.sinhalab.net/sinha-s-home"]
+#url2= ["https://wiki.cites.illinois.edu/wiki/display/kevinchang/Kevin+C.+Chang", "https://cs.illinois.edu/directory/profile/kcchang", "http://luthuli.cs.uiuc.edu/~daf/contact.html", "http://rsim.cs.illinois.edu/~sadve/contact.html", "http://web.engr.illinois.edu/~vadve/Contact_Info.html","http://web.engr.illinois.edu/~zaher/", "http://orchid.cs.illinois.edu/people/bailey/index.html", "http://web.engr.illinois.edu/~caesar/", "http://jeffe.cs.illinois.edu/address.html", "http://mfleck.cs.illinois.edu/", "http://pbg.cs.illinois.edu/", "http://polaris.cs.uiuc.edu/~garzaran/", "http://web.engr.illinois.edu/~cgunter/?page_id=8", "http://indy.cs.illinois.edu/", "http://hanj.cs.illinois.edu/", "http://social.cs.uiuc.edu/people/kkarahal.html", "http://charm.cs.illinois.edu/~kale/", "http://akolla.cs.illinois.edu/", "http://lukeo.cs.illinois.edu/", "http://web.engr.illinois.edu/~adityagp/", "http://mmp.cs.illinois.edu/", "http://l2r.cs.illinois.edu/contact.html", "http://rutenbar.cs.illinois.edu/contact/", "http://www.sinhalab.net/sinha-s-home"]
+url2= ["http://l2r.cs.illinois.edu/contact.html"]
 info = []
 emails = []
 phone_pos = []
@@ -163,14 +168,31 @@ for url in url2:
     m = m.encode('utf-8')
     m = m.split("\n")
     m[:] = [x.decode('utf-8').strip() for x in m if x.decode('utf-8').strip() != '']
-    m[:] = [x.replace('&nbsp', '') for x in m]
-    
+    m[:] = [x.replace('&nbsp', u' ') for x in m]
+    m[:] = [x.replace(u'\xa0', u' ') for x in m]
+    m = " ".join(m)
+    #m = ''.join([i if ord(i) < 128 else ' ' for i in m])
+    m = m.decode('utf-8')
+    m=[m]
     namefound = []
     thisurl = (url, [])
-    for name in namelist:
-        if (name.decode('utf-8') in ' '.join(m)):
+    ########################### name finding #########################
+    st = NERTagger('C:/Users/Harshit Agarwal/Downloads/stanford-ner-2014-06-16/stanford-ner-2014-06-16/classifiers/english.all.3class.distsim.crf.ser.gz','C:/Users/Harshit Agarwal/Downloads/stanford-ner-2014-06-16/stanford-ner-2014-06-16/stanford-ner.jar')
+    string = m[0].split()
+    listname = st.tag(string)
+    for iii in xrange(len(listname)-3):
+        if (listname[iii][1]=='PERSON' and listname[iii+1][1]=='PERSON' and listname[iii+2][1]=='PERSON'):
+            name = listname[iii][0]+" " + listname[iii+1][0]+ " " +listname[iii+2][0]
             namefound.append(name)
             thisurl[1].append((name, [], [], []))
+            iii+=3
+        elif (listname[iii][1]=='PERSON' and listname[iii+1][1]=='PERSON'):
+            name = listname[iii][0]+" " + listname[iii+1][0]
+            namefound.append(name)
+            thisurl[1].append((name, [], [], []))
+            iii+=2
+    ##################################################################   
+    print namefound 
     for kk in emails[it]:
         for count in range(len(namefound)):
             if ' ' in kk:
@@ -188,17 +210,26 @@ for url in url2:
                 thisurl[1][count][1].append(jjj)
                 #thisurl[1][count][1] = list(set(thisurl[1][count][1]))
                 break
-    for counter in range(len(thisphone)):
-        aaaaa=0
-        line = thispos[counter][0]
+    print thisphone
+    for phone in (thisphone):
+        #line = thispos[counter][0]
         notmatched = []
-        position = thispos[counter][1]
+        #position = thispos[counter][1]
+        print phone
+        position_num = m[0].find(phone)
+        print position_num
         for count in range(len(namefound)):
             namehere = namefound[count]
-            if namehere.decode('utf-8') in m[line]:
-                if m[line].find(namehere.decode('utf-8'))<position:
-                    thisurl[1][count][2].append(thisphone[counter])
-                    alsothisphone.remove(thisphone[counter])
+            if m[0].find(namehere.decode('utf-8'))<position_num:
+                    thisurl[1][count][2].append(phone)
+                    try:
+                        thisurl[1][count-1][2].remove(phone)
+                    except:
+                        okwhatever = 0
+                    try:
+                        alsothisphone.remove(phone)
+                    except:
+                        thisshouldhaveworked = 0
     try:
         thisurl[1][0][2].append(alsothisphone)
     except:
