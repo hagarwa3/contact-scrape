@@ -2,7 +2,7 @@
 import urllib2
 from bs4 import BeautifulSoup
 import re
-from nltk.tag.stanford import NERTagger
+from nltk.tag.stanford import StanfordNERTagger
 import os
 import string
 java_path = "C:/Program Files/Java/jdk1.7.0_71/bin/java.exe"
@@ -73,7 +73,7 @@ def lcs(a, b):
 ################################################################################
 
 
-url2= ["https://wiki.cites.illinois.edu/wiki/display/kevinchang/Kevin+C.+Chang", "https://cs.illinois.edu/directory/profile/kcchang", "http://luthuli.cs.uiuc.edu/~daf/contact.html", "http://rsim.cs.illinois.edu/~sadve/contact.html", "http://web.engr.illinois.edu/~vadve/Contact_Info.html","http://web.engr.illinois.edu/~zaher/", "http://orchid.cs.illinois.edu/people/bailey/index.html", "http://web.engr.illinois.edu/~caesar/", "http://jeffe.cs.illinois.edu/address.html", "http://mfleck.cs.illinois.edu/", "http://pbg.cs.illinois.edu/", "http://polaris.cs.uiuc.edu/~garzaran/", "http://web.engr.illinois.edu/~cgunter/?page_id=8", "http://indy.cs.illinois.edu/", "http://hanj.cs.illinois.edu/", "http://social.cs.uiuc.edu/people/kkarahal.html", "http://charm.cs.illinois.edu/~kale/", "http://akolla.cs.illinois.edu/", "http://lukeo.cs.illinois.edu/", "http://web.engr.illinois.edu/~adityagp/", "http://mmp.cs.illinois.edu/", "http://l2r.cs.illinois.edu/contact.html", "http://rutenbar.cs.illinois.edu/contact/", "http://www.sinhalab.net/sinha-s-home"]
+url2= ["https://wiki.cites.illinois.edu/wiki/display/kevinchang/Kevin+C.+Chang"]#, "https://cs.illinois.edu/directory/profile/kcchang", "http://luthuli.cs.uiuc.edu/~daf/contact.html", "http://rsim.cs.illinois.edu/~sadve/contact.html", "http://web.engr.illinois.edu/~vadve/Contact_Info.html","http://web.engr.illinois.edu/~zaher/", "http://orchid.cs.illinois.edu/people/bailey/index.html", "http://web.engr.illinois.edu/~caesar/", "http://jeffe.cs.illinois.edu/address.html", "http://mfleck.cs.illinois.edu/", "http://pbg.cs.illinois.edu/", "http://polaris.cs.uiuc.edu/~garzaran/", "http://web.engr.illinois.edu/~cgunter/?page_id=8", "http://indy.cs.illinois.edu/", "http://hanj.cs.illinois.edu/", "http://social.cs.uiuc.edu/people/kkarahal.html", "http://charm.cs.illinois.edu/~kale/", "http://akolla.cs.illinois.edu/", "http://lukeo.cs.illinois.edu/", "http://web.engr.illinois.edu/~adityagp/", "http://mmp.cs.illinois.edu/", "http://l2r.cs.illinois.edu/contact.html", "http://rutenbar.cs.illinois.edu/contact/", "http://www.sinhalab.net/sinha-s-home"]
 #url2= ["http://research.unc.edu/offices/sponsored-research/about/staff/"]
 info = []
 emails = []
@@ -200,6 +200,7 @@ for url in url2:
            # thisurl[1].append((name, [], [], []))
             #iii+=2
     ################################################################## 
+    print namelist
     for name in namelist:
         if (name.decode('utf-8') in ' '.join(m)):
             namefound.append(name)

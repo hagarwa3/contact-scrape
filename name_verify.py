@@ -2,10 +2,11 @@
 import urllib2
 from bs4 import BeautifulSoup
 import re
-from nltk.tag.stanford import NERTagger
-import os
-java_path = "C:/Program Files/Java/jdk1.7.0_71/bin/java.exe"
-os.environ['JAVAHOME'] = java_path
+#import enchant
+#from nltk.tag.stanford import NERTagger
+#import os
+#java_path = "C:/Program Files/Java/jdk1.7.0_71/bin/java.exe"
+#os.environ['JAVAHOME'] = java_path
 #name. phone, title, email, department
 
 namelist = ["Kevin C. Chang", "Donna Coleman", "Sarita Adve", "Molly Flesner", "Vikram Adve", "Tarek F. Abdelzaher", "Brian P. Bailey", "Matthew Caesar", "Jeff Erickson", "Margaret M. Fleck", "Philip Brighten Godfrey", "María Jesús Garzarán", "Carl A. Gunter", "Indy Clay", "Indranil Gupta", "Karrie G. Karahalios", "Jiawei Han", "Shanna M. DeSouza", "Tierra McCurry", "Laxmikant V. Kale", "Alexandra Kolla", "Aditya Parameswaran", "Manoj M. Prabhakaran", "Luke Olson", "Rob A. Rutenbar", "Karen Stahl", "Tierra Reed", "Saurabh Sinha", "Dan Roth"]
@@ -72,8 +73,8 @@ def lcs(a, b):
 ################################################################################
 
 
-url2= ["https://wiki.cites.illinois.edu/wiki/display/kevinchang/Kevin+C.+Chang", "https://cs.illinois.edu/directory/profile/kcchang", "http://luthuli.cs.uiuc.edu/~daf/contact.html", "http://rsim.cs.illinois.edu/~sadve/contact.html", "http://web.engr.illinois.edu/~vadve/Contact_Info.html","http://web.engr.illinois.edu/~zaher/", "http://orchid.cs.illinois.edu/people/bailey/index.html", "http://web.engr.illinois.edu/~caesar/"]#, "http://jeffe.cs.illinois.edu/address.html", "http://mfleck.cs.illinois.edu/", "http://pbg.cs.illinois.edu/", "http://polaris.cs.uiuc.edu/~garzaran/", "http://web.engr.illinois.edu/~cgunter/?page_id=8", "http://indy.cs.illinois.edu/", "http://hanj.cs.illinois.edu/", "http://social.cs.uiuc.edu/people/kkarahal.html", "http://charm.cs.illinois.edu/~kale/", "http://akolla.cs.illinois.edu/", "http://lukeo.cs.illinois.edu/", "http://web.engr.illinois.edu/~adityagp/", "http://mmp.cs.illinois.edu/", "http://l2r.cs.illinois.edu/contact.html", "http://rutenbar.cs.illinois.edu/contact/", "http://www.sinhalab.net/sinha-s-home"]
-#url2= ["http://l2r.cs.illinois.edu/contact.html"]
+#url2= ["https://wiki.cites.illinois.edu/wiki/display/kevinchang/Kevin+C.+Chang", "https://cs.illinois.edu/directory/profile/kcchang", "http://luthuli.cs.uiuc.edu/~daf/contact.html", "http://rsim.cs.illinois.edu/~sadve/contact.html", "http://web.engr.illinois.edu/~vadve/Contact_Info.html","http://web.engr.illinois.edu/~zaher/", "http://orchid.cs.illinois.edu/people/bailey/index.html", "http://web.engr.illinois.edu/~caesar/", "http://jeffe.cs.illinois.edu/address.html", "http://mfleck.cs.illinois.edu/", "http://pbg.cs.illinois.edu/", "http://polaris.cs.uiuc.edu/~garzaran/", "http://web.engr.illinois.edu/~cgunter/?page_id=8", "http://indy.cs.illinois.edu/", "http://hanj.cs.illinois.edu/", "http://social.cs.uiuc.edu/people/kkarahal.html", "http://charm.cs.illinois.edu/~kale/", "http://akolla.cs.illinois.edu/", "http://lukeo.cs.illinois.edu/", "http://web.engr.illinois.edu/~adityagp/", "http://mmp.cs.illinois.edu/", "http://l2r.cs.illinois.edu/contact.html", "http://rutenbar.cs.illinois.edu/contact/", "http://www.sinhalab.net/sinha-s-home"]
+url2= ["http://orchid.cs.illinois.edu/people/bailey/index.html"]
 info = []
 emails = []
 phone_pos = []
@@ -163,7 +164,7 @@ for url in url2:
         tag.replaceWith('')
     for tag in soup.find_all('style'):
         tag.replaceWith('')
-    soup = soup.find('body')                 #why didn't I do this before
+    soup = soup.find('body')
     m = soup.get_text()
     m = m.encode('utf-8')
     m = m.split("\n")
@@ -172,27 +173,69 @@ for url in url2:
     m[:] = [x.replace(u'\xa0', u' ') for x in m]
     m = " ".join(m)
     #m = ''.join([i if ord(i) < 128 else ' ' for i in m])
-    m = m.decode('utf-8')
+    # m = m.decode('utf-8')
     m=[m]
     namefound = []
+    possible_names = []
     thisurl = (url, [])
     ########################### name finding #########################
-    st = NERTagger('C:/Users/Harshit Agarwal/Downloads/stanford-ner-2014-06-16/stanford-ner-2014-06-16/classifiers/english.all.3class.distsim.crf.ser.gz','C:/Users/Harshit Agarwal/Downloads/stanford-ner-2014-06-16/stanford-ner-2014-06-16/stanford-ner.jar')
     string = m[0].split()
-    listname = st.tag(string)
-    for iii in xrange(len(listname)-3):
-        if (listname[iii][1]=='PERSON' and listname[iii+1][1]=='PERSON' and listname[iii+2][1]=='PERSON'):
-            name = listname[iii][0]+" " + listname[iii+1][0]+ " " +listname[iii+2][0]
+    #string = st.tag(string)
+    for iii in xrange(len(string)-3):
+        if (string[iii][0].isupper() and string[iii+1][0].isupper() and string[iii+2][0].isupper()):
+            name = string[iii]+" " + string[iii+1]+ " " +string[iii+2]
             namefound.append(name)
             thisurl[1].append((name, [], [], []))
             iii+=3
-        elif (listname[iii][1]=='PERSON' and listname[iii+1][1]=='PERSON'):
-            name = listname[iii][0]+" " + listname[iii+1][0]
+        elif (string[iii][0].isupper() and string[iii+1][0].isupper()):
+            name = string[iii]+" " + string[iii+1]
             namefound.append(name)
             thisurl[1].append((name, [], [], []))
             iii+=2
     ##################################################################   
-    print namefound 
+    #print namefound
+    
+    f = open("C:\Users\Harshit Agarwal\Desktop\context_mining\contact-scrape\words.txt", 'r')
+    content = [lin[:-1] for lin in f]
+    con = {a:a for a in content}
+    namese = namefound
+    #names = []
+    #print namefound
+    #for namee in namefound:
+    #    print namee
+    for namee in namefound:
+        #print name
+        nn = namee
+        splitname = namee.split(" ")
+        print splitname
+        for spl in splitname:
+            spl = spl.lower()
+            #print spl
+            if spl in con:
+                #print spl
+                print namee
+                namese.remove(nn)
+                break
+                #print nn
+    print namese
+    namefound = namese
+    for namee in namefound:
+        #print name
+        nn = namee
+        splitname = namee.split(" ")
+        print splitname
+        for spl in splitname:
+            spl = spl.lower()
+            print spl
+            if spl in con:
+                print spl
+                print namee
+                namese.remove(nn)
+                break
+                #print nn
+    #print names
+    namefound = namese
+    print namefound
     for kk in emails[it]:
         for count in range(len(namefound)):
             if ' ' in kk:
